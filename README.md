@@ -5,9 +5,9 @@ Monitors the EEG data from devices compatible with the BrainFlow library.
 
 <a href="http://lucidcode.com/category/software/lucid-scribe-plugins/BrainFlow/">Download Installer</a> (requires <a href="http://lucidcode.com/LucidScribe/">Lucid Scribe</a>)
 
-![LucidScribe BrainFlow](https://github.com/lucidcode/LucidScribe-BrainFlow/raw/master/BrainFlow.png?raw=true "LucidScribe BrainFlow")
+![LucidScribe BrainFlow](https://github.com/lucidcode/LucidScribe-BrainFlow/raw/main/BrainFlow.png?raw=true "LucidScribe BrainFlow")
 
-![LucidScribe BrainFlow](https://github.com/lucidcode/LucidScribe-BrainFlow/raw/master/BrainFlow.gif?raw=true "LucidScribe BrainFlow")
+![LucidScribe BrainFlow](https://github.com/lucidcode/LucidScribe-BrainFlow/raw/main/BrainFlow.gif?raw=true "LucidScribe BrainFlow")
 
 # Boards
 
