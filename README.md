@@ -1,4 +1,4 @@
-LucidScribe-OpeenEEG
+LucidScribe-BrainFlow
 ====================
 
 Monitors the EEG data from devices compatible with the BrainFlow library. 
