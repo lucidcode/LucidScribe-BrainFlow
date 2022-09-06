@@ -9,8 +9,15 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 {
     public partial class ConnectForm : Form
     {
-        public UserSettings Settings = new UserSettings() { Board = "BrainFlow - Synthetic" };
-        private List<Board> boards = new List<Board>() { new Board { Id = -1, Type = "BrainFlow", Name = "Synthetic" } };
+        public UserSettings Settings = new UserSettings() {
+            Board = "BrainFlow - Synthetic"
+        };
+        private List<Board> boards = new List<Board>() { 
+            new Board { 
+                Id = -1, 
+                Type = "BrainFlow", 
+                Name = "Synthetic" }
+        };
         private string lucidScribePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\lucidcode\Lucid Scribe\";
 
         public ConnectForm()
@@ -57,16 +64,13 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         private void LoadSettings()
         {
-            if (!File.Exists(lucidScribePath + @"Plugins\BrainFlow.User.lsd"))
-            {
-                return;
-            }
-
-            var json = File.ReadAllText(lucidScribePath + @"Plugins\BrainFlow.User.lsd");
-
             try
             {
-                Settings = JsonConvert.DeserializeObject<UserSettings>(json);
+                if (File.Exists(lucidScribePath + @"Plugins\BrainFlow.User.lsd"))
+                {
+                    var json = File.ReadAllText(lucidScribePath + @"Plugins\BrainFlow.User.lsd");
+                    Settings = JsonConvert.DeserializeObject<UserSettings>(json);
+                }
             }
             catch (Exception ex)
             {
