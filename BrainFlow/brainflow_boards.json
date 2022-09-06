@@ -1,0 +1,17 @@
+[
+  {
+    "type": "BrainFlow",
+    "name": "Playback",
+    "id": -3
+  },
+  {
+    "type": "BrainFlow",
+    "name": "Streaming",
+    "id": -2
+  },
+  {
+    "type": "BrainFlow",
+    "name": "Synthetic",
+    "id": -1
+  }
+]

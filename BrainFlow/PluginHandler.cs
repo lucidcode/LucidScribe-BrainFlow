@@ -86,8 +86,6 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
                     InitError = true;
                     return false;
                 }
-
-                Initialized = true;
             }
             return true;
         }
@@ -104,6 +102,8 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             eegValues = new double[eegChannels.Length];
             eegTicks = new double[eegChannels.Length];
             clearValues = new bool[eegChannels.Length];
+
+            Initialized = true;
 
             do
             {
@@ -162,6 +162,7 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         public static double GetEEG(int index)
         {
+            if (!Initialized) return 0;
             if (eegTicks.Length <= index - 1) return 0;
             if (eegTicks[index - 1] == 0) return 0;
             double average = eegValues[index - 1] / eegTicks[index - 1];
@@ -170,6 +171,7 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         public static void ClearEEG(int index)
         {
+            if (!Initialized) return;
             if (clearValues.Length <= index - 1) return;
             clearValues[index - 1] = true;
         }
