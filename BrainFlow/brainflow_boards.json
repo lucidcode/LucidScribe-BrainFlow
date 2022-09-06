@@ -13,5 +13,200 @@
     "type": "BrainFlow",
     "name": "Synthetic",
     "id": -1
+  },
+  {
+    "type": "OpenBCI",
+    "name": "Cyton",
+    "id": 0
+  },
+  {
+    "type": "OpenBCI",
+    "name": "Ganglion",
+    "id": 1
+  },
+  {
+    "type": "OpenBCI",
+    "name": "Cyton Daisy",
+    "id": 2
+  },
+  {
+    "type": "OpenBCI",
+    "name": "Ganglion WIFI",
+    "id": 4
+  },
+  {
+    "type": "OpenBCI",
+    "name": "Cyton WIFI",
+    "id": 5
+  },
+  {
+    "type": "OpenBCI",
+    "name": "Cyton Daisy WIFI",
+    "id": 6
+  },
+  {
+    "type": "NeuroMD",
+    "name": "BrainBit",
+    "id": 7
+  },
+  {
+    "type": "NeuroMD",
+    "name": "CallibriEEG",
+    "id": 9
+  },
+  {
+    "type": "NeuroMD",
+    "name": "CallibriEMG",
+    "id": 10
+  },
+  {
+    "type": "NeuroMD",
+    "name": "CallibriECG",
+    "id": 11
+  },
+  {
+    "type": "NeuroMD",
+    "name": "BrainBitBLED",
+    "id": 18
+  },
+  {
+    "type": "G.TEC",
+    "name": "Unicorn",
+    "id": 8
+  },
+  {
+    "type": "Neurosity",
+    "name": "Notion 1",
+    "id": 13
+  },
+  {
+    "type": "Neurosity",
+    "name": "Notion 2",
+    "id": 14
+  },
+  {
+    "type": "Neurosity",
+    "name": "Crown",
+    "id": 23
+  },
+  {
+    "type": "OYMotion",
+    "name": "GforcePro",
+    "id": 16
+  },
+  {
+    "type": "OYMotion",
+    "name": "GforceDual",
+    "id": 19
+  },
+  {
+    "type": "FreeEEG32",
+    "name": "FreeEEG32",
+    "id": 17
+  },
+  {
+    "type": "Muse",
+    "name": "MuseSBLED",
+    "id": 21
+  },
+  {
+    "type": "Muse",
+    "name": "Muse2BLED",
+    "id": 22
+  },
+  {
+    "type": "Muse",
+    "name": "Muse2016BLED",
+    "id": 42
+  },
+  {
+    "type": "Muse",
+    "name": "Muse2",
+    "id": 38
+  },
+  {
+    "type": "Muse",
+    "name": "MuseS",
+    "id": 39
+  },
+  {
+    "type": "Muse",
+    "name": "Muse2016",
+    "id": 41
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE410",
+    "id": 24
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE411",
+    "id": 25
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE430",
+    "id": 26
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE211",
+    "id": 27
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE212",
+    "id": 28
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE213",
+    "id": 29
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE214",
+    "id": 30
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE215",
+    "id": 31
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE221",
+    "id": 32
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE222",
+    "id": 33
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE223",
+    "id": 34
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE224",
+    "id": 35
+  },
+  {
+    "type": "Ant Neuro",
+    "name": "AntNeuroBoardEE225",
+    "id": 36
+  },
+  {
+    "type": "Enophone",
+    "name": "Enophone",
+    "id": 37
+  },
+  {
+    "type": "BrainAlive",
+    "name": "BrainAlive",
+    "id": 40
   }
 ]
