@@ -48,15 +48,15 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
                     {
                         int boardId = Convert.ToInt32(connectForm.Settings.BoardId);
                         BrainFlowInputParams inputParams = new BrainFlowInputParams();
-                        inputParams.ip_address = connectForm.Settings.IpAddress;
+                        inputParams.ip_address = connectForm.Settings.IpAddress ?? "";
                         inputParams.ip_port = connectForm.Settings.IpPort;
                         inputParams.ip_protocol = connectForm.Settings.IpProtocol;
-                        inputParams.mac_address = connectForm.Settings.MacAddress;
-                        inputParams.serial_port = connectForm.Settings.SerialPort;
-                        inputParams.serial_number = connectForm.Settings.SerialNumber;
+                        inputParams.mac_address = connectForm.Settings.MacAddress ?? "";
+                        inputParams.serial_port = connectForm.Settings.SerialPort ?? "";
+                        inputParams.serial_number = connectForm.Settings.SerialNumber ?? "";
                         inputParams.timeout = connectForm.Settings.Timeout;
-                        inputParams.other_info = connectForm.Settings.OtherInfo;
-                        inputParams.file = connectForm.Settings.File;
+                        inputParams.other_info = connectForm.Settings.OtherInfo ?? "";
+                        inputParams.file = connectForm.Settings.File ?? "";
 
                         boardThread = new Thread(() => GetBoardData(boardId, inputParams));
                         boardThread.Start();
@@ -87,7 +87,6 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
             boardShim.prepare_session();
             boardShim.start_stream();
-            Thread.Sleep(640);
 
             eegChannels = BoardShim.get_eeg_channels(board_id);
             eegValues = new double[eegChannels.Length];
