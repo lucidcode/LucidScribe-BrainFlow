@@ -104,6 +104,13 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
                     {
                         eegValues[index - 1] += row;
                         eegTicks[index - 1]++;
+
+                        if (clearValues[index - 1])
+                        {
+                            eegValues[index - 1] = 0;
+                            eegTicks[index - 1] = 0;
+                            clearValues[index - 1] = false;
+                        }
                     }
 
                     if (index == 1 && Channel1Changed != null) Channel1Changed(string.Join(",", rows), null);
@@ -122,16 +129,6 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
                     if (index == 14 && Channel14Changed != null) Channel14Changed(string.Join(",", rows), null);
                     if (index == 15 && Channel15Changed != null) Channel15Changed(string.Join(",", rows), null);
                     if (index == 16 && Channel16Changed != null) Channel16Changed(string.Join(",", rows), null);
-                }
-
-                foreach (var index in eegChannels)
-                {
-                    if (clearValues[index -1])
-                    {
-                        eegValues[index - 1] = 0;
-                        eegTicks[index - 1] = 0;
-                        clearValues[index - 1] = false;
-                    }
                 }
             }
             while (!disposing);
@@ -154,14 +151,8 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             if (eegTicks.Length <= index - 1) return 0;
             if (eegTicks[index - 1] == 0) return 0;
             double average = eegValues[index - 1] / eegTicks[index - 1];
-            return average;
-        }
-
-        public static void ClearEEG(int index)
-        {
-            if (!initialized) return;
-            if (clearValues.Length <= index - 1) return;
             clearValues[index - 1] = true;
+            return average;
         }
     }
 }

@@ -25,9 +25,7 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             {
                 get
                 {
-                    double tempValue = Device.GetEEG(8);
-                    Device.ClearEEG(8);
-                    return tempValue;
+                    return Device.GetEEG(8);
                 }
             }
 
