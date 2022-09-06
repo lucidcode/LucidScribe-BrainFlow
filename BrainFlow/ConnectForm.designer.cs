@@ -59,6 +59,9 @@
             this.label11 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.connectButton = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.boardComboBox = new System.Windows.Forms.ComboBox();
             this.panel3D3.SuspendLayout();
             this.panel3D5.SuspendLayout();
             this.SuspendLayout();
@@ -68,6 +71,9 @@
             this.panel3D3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3D3.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel3D3.Controls.Add(this.boardComboBox);
+            this.panel3D3.Controls.Add(this.label15);
+            this.panel3D3.Controls.Add(this.label16);
             this.panel3D3.Controls.Add(this.otherInfoText);
             this.panel3D3.Controls.Add(this.label8);
             this.panel3D3.Controls.Add(this.timeoutText);
@@ -95,23 +101,23 @@
             this.panel3D3.Controls.Add(this.panel3D5);
             this.panel3D3.Location = new System.Drawing.Point(12, 12);
             this.panel3D3.Name = "panel3D3";
-            this.panel3D3.Size = new System.Drawing.Size(308, 304);
+            this.panel3D3.Size = new System.Drawing.Size(308, 331);
             this.panel3D3.TabIndex = 284;
             // 
             // otherInfoText
             // 
             this.otherInfoText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.otherInfoText.Location = new System.Drawing.Point(131, 219);
+            this.otherInfoText.Location = new System.Drawing.Point(116, 249);
             this.otherInfoText.Name = "otherInfoText";
-            this.otherInfoText.Size = new System.Drawing.Size(170, 21);
+            this.otherInfoText.Size = new System.Drawing.Size(180, 21);
             this.otherInfoText.TabIndex = 9;
             this.otherInfoText.TextChanged += new System.EventHandler(this.otherInfoText_TextChanged);
             // 
             // label8
             // 
             this.label8.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label8.Location = new System.Drawing.Point(9, 219);
+            this.label8.Location = new System.Drawing.Point(13, 249);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(116, 21);
             this.label8.TabIndex = 315;
@@ -122,16 +128,16 @@
             // 
             this.timeoutText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.timeoutText.Location = new System.Drawing.Point(131, 246);
+            this.timeoutText.Location = new System.Drawing.Point(116, 276);
             this.timeoutText.Name = "timeoutText";
-            this.timeoutText.Size = new System.Drawing.Size(170, 21);
+            this.timeoutText.Size = new System.Drawing.Size(180, 21);
             this.timeoutText.TabIndex = 10;
             this.timeoutText.TextChanged += new System.EventHandler(this.timeoutText_TextChanged);
             // 
             // label12
             // 
             this.label12.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label12.Location = new System.Drawing.Point(9, 246);
+            this.label12.Location = new System.Drawing.Point(13, 276);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(116, 21);
             this.label12.TabIndex = 313;
@@ -142,16 +148,16 @@
             // 
             this.serialPortText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.serialPortText.Location = new System.Drawing.Point(131, 165);
+            this.serialPortText.Location = new System.Drawing.Point(116, 195);
             this.serialPortText.Name = "serialPortText";
-            this.serialPortText.Size = new System.Drawing.Size(170, 21);
+            this.serialPortText.Size = new System.Drawing.Size(180, 21);
             this.serialPortText.TabIndex = 7;
             this.serialPortText.TextChanged += new System.EventHandler(this.serialPortText_TextChanged);
             // 
             // label6
             // 
             this.label6.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label6.Location = new System.Drawing.Point(9, 165);
+            this.label6.Location = new System.Drawing.Point(13, 195);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(116, 21);
             this.label6.TabIndex = 309;
@@ -162,16 +168,16 @@
             // 
             this.macAddressText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.macAddressText.Location = new System.Drawing.Point(131, 138);
+            this.macAddressText.Location = new System.Drawing.Point(116, 168);
             this.macAddressText.Name = "macAddressText";
-            this.macAddressText.Size = new System.Drawing.Size(170, 21);
+            this.macAddressText.Size = new System.Drawing.Size(180, 21);
             this.macAddressText.TabIndex = 6;
             this.macAddressText.TextChanged += new System.EventHandler(this.macAddressText_TextChanged);
             // 
             // label5
             // 
             this.label5.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label5.Location = new System.Drawing.Point(9, 138);
+            this.label5.Location = new System.Drawing.Point(13, 168);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(116, 21);
             this.label5.TabIndex = 307;
@@ -182,16 +188,16 @@
             // 
             this.fileText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.fileText.Location = new System.Drawing.Point(131, 273);
+            this.fileText.Location = new System.Drawing.Point(116, 303);
             this.fileText.Name = "fileText";
-            this.fileText.Size = new System.Drawing.Size(170, 21);
+            this.fileText.Size = new System.Drawing.Size(180, 21);
             this.fileText.TabIndex = 11;
             this.fileText.TextChanged += new System.EventHandler(this.fileText_TextChanged);
             // 
             // label14
             // 
             this.label14.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label14.Location = new System.Drawing.Point(9, 273);
+            this.label14.Location = new System.Drawing.Point(13, 303);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(116, 21);
             this.label14.TabIndex = 305;
@@ -202,16 +208,16 @@
             // 
             this.serialNumberText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.serialNumberText.Location = new System.Drawing.Point(131, 192);
+            this.serialNumberText.Location = new System.Drawing.Point(116, 222);
             this.serialNumberText.Name = "serialNumberText";
-            this.serialNumberText.Size = new System.Drawing.Size(170, 21);
+            this.serialNumberText.Size = new System.Drawing.Size(180, 21);
             this.serialNumberText.TabIndex = 8;
             this.serialNumberText.TextChanged += new System.EventHandler(this.serialNumberText_TextChanged);
             // 
             // label13
             // 
             this.label13.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label13.Location = new System.Drawing.Point(9, 192);
+            this.label13.Location = new System.Drawing.Point(13, 222);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(116, 21);
             this.label13.TabIndex = 303;
@@ -222,16 +228,16 @@
             // 
             this.ipProtocolText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ipProtocolText.Location = new System.Drawing.Point(131, 111);
+            this.ipProtocolText.Location = new System.Drawing.Point(116, 141);
             this.ipProtocolText.Name = "ipProtocolText";
-            this.ipProtocolText.Size = new System.Drawing.Size(170, 21);
+            this.ipProtocolText.Size = new System.Drawing.Size(180, 21);
             this.ipProtocolText.TabIndex = 5;
             this.ipProtocolText.TextChanged += new System.EventHandler(this.ipProtocolText_TextChanged);
             // 
             // label10
             // 
             this.label10.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label10.Location = new System.Drawing.Point(9, 111);
+            this.label10.Location = new System.Drawing.Point(13, 141);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(116, 21);
             this.label10.TabIndex = 299;
@@ -242,16 +248,16 @@
             // 
             this.ipPortText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ipPortText.Location = new System.Drawing.Point(131, 84);
+            this.ipPortText.Location = new System.Drawing.Point(116, 114);
             this.ipPortText.Name = "ipPortText";
-            this.ipPortText.Size = new System.Drawing.Size(170, 21);
+            this.ipPortText.Size = new System.Drawing.Size(180, 21);
             this.ipPortText.TabIndex = 4;
             this.ipPortText.TextChanged += new System.EventHandler(this.ipPortText_TextChanged);
             // 
             // label9
             // 
             this.label9.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label9.Location = new System.Drawing.Point(9, 84);
+            this.label9.Location = new System.Drawing.Point(13, 114);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(116, 21);
             this.label9.TabIndex = 297;
@@ -262,16 +268,16 @@
             // 
             this.ipAddressText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ipAddressText.Location = new System.Drawing.Point(131, 57);
+            this.ipAddressText.Location = new System.Drawing.Point(116, 87);
             this.ipAddressText.Name = "ipAddressText";
-            this.ipAddressText.Size = new System.Drawing.Size(170, 21);
+            this.ipAddressText.Size = new System.Drawing.Size(180, 21);
             this.ipAddressText.TabIndex = 3;
             this.ipAddressText.TextChanged += new System.EventHandler(this.ipAddressText_TextChanged);
             // 
             // label3
             // 
             this.label3.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label3.Location = new System.Drawing.Point(9, 57);
+            this.label3.Location = new System.Drawing.Point(13, 87);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(116, 21);
             this.label3.TabIndex = 289;
@@ -282,16 +288,16 @@
             // 
             this.boardIdText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.boardIdText.Location = new System.Drawing.Point(131, 30);
+            this.boardIdText.Location = new System.Drawing.Point(116, 60);
             this.boardIdText.Name = "boardIdText";
-            this.boardIdText.Size = new System.Drawing.Size(170, 21);
+            this.boardIdText.Size = new System.Drawing.Size(180, 21);
             this.boardIdText.TabIndex = 2;
             this.boardIdText.TextChanged += new System.EventHandler(this.boardIdText_TextChanged);
             // 
             // label1
             // 
             this.label1.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label1.Location = new System.Drawing.Point(9, 30);
+            this.label1.Location = new System.Drawing.Point(13, 60);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(116, 21);
             this.label1.TabIndex = 287;
@@ -302,9 +308,9 @@
             // 
             this.thresholdText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.thresholdText.Location = new System.Drawing.Point(131, 57);
+            this.thresholdText.Location = new System.Drawing.Point(116, 87);
             this.thresholdText.Name = "thresholdText";
-            this.thresholdText.Size = new System.Drawing.Size(170, 21);
+            this.thresholdText.Size = new System.Drawing.Size(180, 21);
             this.thresholdText.TabIndex = 1;
             this.thresholdText.Visible = false;
             this.thresholdText.TextChanged += new System.EventHandler(this.txtThreshold_TextChanged);
@@ -312,7 +318,7 @@
             // label7
             // 
             this.label7.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label7.Location = new System.Drawing.Point(9, 57);
+            this.label7.Location = new System.Drawing.Point(13, 87);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(116, 21);
             this.label7.TabIndex = 285;
@@ -323,7 +329,7 @@
             // label2
             // 
             this.label2.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label2.Location = new System.Drawing.Point(9, 30);
+            this.label2.Location = new System.Drawing.Point(13, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(116, 21);
             this.label2.TabIndex = 285;
@@ -340,9 +346,9 @@
             this.cmbAlgorithm.Items.AddRange(new object[] {
             "REM Detection",
             "Motion Detection"});
-            this.cmbAlgorithm.Location = new System.Drawing.Point(131, 30);
+            this.cmbAlgorithm.Location = new System.Drawing.Point(116, 60);
             this.cmbAlgorithm.Name = "cmbAlgorithm";
-            this.cmbAlgorithm.Size = new System.Drawing.Size(170, 21);
+            this.cmbAlgorithm.Size = new System.Drawing.Size(180, 21);
             this.cmbAlgorithm.TabIndex = 0;
             this.cmbAlgorithm.Visible = false;
             this.cmbAlgorithm.SelectedIndexChanged += new System.EventHandler(this.cmbAlgorithm_SelectedIndexChanged);
@@ -393,7 +399,7 @@
             this.cancelButton.ForeColor = System.Drawing.Color.MidnightBlue;
             this.cancelButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.cancelButton.ImageIndex = 1;
-            this.cancelButton.Location = new System.Drawing.Point(215, 331);
+            this.cancelButton.Location = new System.Drawing.Point(215, 360);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.cancelButton.Size = new System.Drawing.Size(105, 32);
@@ -412,7 +418,7 @@
             this.connectButton.ForeColor = System.Drawing.Color.MidnightBlue;
             this.connectButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.connectButton.ImageIndex = 0;
-            this.connectButton.Location = new System.Drawing.Point(104, 331);
+            this.connectButton.Location = new System.Drawing.Point(104, 360);
             this.connectButton.Name = "connectButton";
             this.connectButton.Padding = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.connectButton.Size = new System.Drawing.Size(105, 32);
@@ -422,12 +428,45 @@
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
+            // label15
+            // 
+            this.label15.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label15.Location = new System.Drawing.Point(13, 30);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(116, 21);
+            this.label15.TabIndex = 319;
+            this.label15.Text = "Board";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label16
+            // 
+            this.label16.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label16.Location = new System.Drawing.Point(13, 30);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(116, 21);
+            this.label16.TabIndex = 318;
+            this.label16.Text = "Algorithm";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label16.Visible = false;
+            // 
+            // boardComboBox
+            // 
+            this.boardComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.boardComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.boardComboBox.FormattingEnabled = true;
+            this.boardComboBox.Location = new System.Drawing.Point(116, 30);
+            this.boardComboBox.Name = "boardComboBox";
+            this.boardComboBox.Size = new System.Drawing.Size(180, 21);
+            this.boardComboBox.TabIndex = 316;
+            this.boardComboBox.SelectedIndexChanged += new System.EventHandler(this.boardComboBox_SelectedIndexChanged);
+            // 
             // ConnectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LightSteelBlue;
-            this.ClientSize = new System.Drawing.Size(332, 375);
+            this.ClientSize = new System.Drawing.Size(332, 404);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.connectButton);
             this.Controls.Add(this.panel3D3);
@@ -476,5 +515,8 @@
         internal System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox boardIdText;
         internal System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox boardComboBox;
+        internal System.Windows.Forms.Label label15;
+        internal System.Windows.Forms.Label label16;
     }
 }

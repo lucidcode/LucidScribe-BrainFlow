@@ -2,12 +2,14 @@
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Linq;
 
 namespace lucidcode.LucidScribe.Plugin.BrainFlow
 {
     public partial class ConnectForm : Form
     {
-
         public string Algorithm = "REM Detection";
         public string BoardId;
         public string IpAddress;
@@ -22,6 +24,8 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         public int Threshold = 600;
 
+        private List<Board> Boards;
+
         private string lucidScribePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\lucidcode\\Lucid Scribe\\";
 
         public ConnectForm()
@@ -31,7 +35,24 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         private void ConnectForm_Load(object sender, EventArgs e)
         {
+            LoadBoards();
             LoadSettings();
+        }
+
+        private void LoadBoards()
+        {
+            if (!File.Exists("brainflow_boards.json"))
+            {
+                return;
+            }
+
+            var json = File.ReadAllText("brainflow_boards.json");
+            Boards = JsonConvert.DeserializeObject<List<Board>>(json);
+
+            foreach (var board in Boards)
+            {
+                boardComboBox.Items.Add($"{board.Type} - {board.Name}");
+            }
         }
 
         private void LoadSettings()
@@ -44,6 +65,7 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
                 defaultSettings += "  <Plugin>\r\n";
                 defaultSettings += "    <Algorithm>REM Detection</Algorithm>\r\n";
                 defaultSettings += "    <Threshold>600</Threshold>\r\n";
+                defaultSettings += "    <Board>BrainFlow - Synthetic</Board>\r\n";
                 defaultSettings += "    <BoardId>-1</BoardId>\r\n";
                 defaultSettings += "    <IpAddress></IpAddress>\r\n";
                 defaultSettings += "    <IpPort></IpPort>\r\n";
@@ -60,6 +82,11 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             }
 
             xmlSettings.Load(lucidScribePath + "Plugins\\BrainFlow.User.lsd");
+
+            if (xmlSettings.DocumentElement.SelectSingleNode("//Board") != null)
+            {
+                boardComboBox.Text = xmlSettings.DocumentElement.SelectSingleNode("//Board").InnerText;
+            }
 
             cmbAlgorithm.Text = xmlSettings.DocumentElement.SelectSingleNode("//Algorithm").InnerText;
             thresholdText.Text = xmlSettings.DocumentElement.SelectSingleNode("//Threshold").InnerText;
@@ -99,6 +126,7 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             settings += "  <Plugin>\r\n";
             settings += "    <Algorithm>" + cmbAlgorithm.Text + "</Algorithm>\r\n";
             settings += "    <Threshold>" + thresholdText.Text + "</Threshold>\r\n";
+            settings += "    <Board>" + boardComboBox.Text + "</Board>\r\n";
             settings += "    <BoardId>" + boardIdText.Text + "</BoardId>\r\n";
             settings += "    <IpAddress>" + ipAddressText.Text + "</IpAddress>\r\n";
             settings += "    <IpPort>" + ipPortText.Text + "</IpPort>\r\n";
@@ -167,6 +195,16 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
         private void fileText_TextChanged(object sender, EventArgs e)
         {
             FileInput = fileText.Text;
+        }
+
+        private void boardComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var board = Boards.FirstOrDefault(b => ($"{b.Type} - {b.Name}") == boardComboBox.Text);
+
+            if (board != null)
+            {
+                boardIdText.Text = board.Id.ToString();
+            }
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
