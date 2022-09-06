@@ -8,9 +8,9 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 {
     public static class Device
     {
-        static bool Initialized;
-        static bool InitError;
-        static bool Disposing;
+        static bool initialized;
+        static bool initError;
+        static bool disposing;
 
         static BoardShim boardShim;
         static int[] eegChannels;
@@ -19,11 +19,6 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
         static double[] eegValues;
         static double[] eegTicks;
         static bool[] clearValues;
-
-        static int channels = 2;
-        public static string Algorithm = "REM Detection";
-        public static int Threshold = 600;
-        public static int BlinkInterval = 28;
 
         public static EventHandler<EventArgs> Channel1Changed;
         public static EventHandler<EventArgs> Channel2Changed;
@@ -44,47 +39,42 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         public static Boolean Initialize()
         {
-            eegChannels = new int[channels];
-
-            if (!Initialized & !InitError)
+            if (!initialized & !initError)
             {
                 ConnectForm connectForm = new ConnectForm();
                 if (connectForm.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        Algorithm = connectForm.Algorithm;
-                        Threshold = connectForm.Threshold;
-
-                        int boardId = Convert.ToInt32(connectForm.BoardId);
+                        int boardId = Convert.ToInt32(connectForm.Settings.BoardId);
                         BrainFlowInputParams inputParams = new BrainFlowInputParams();
-                        inputParams.ip_address = connectForm.IpAddress;
-                        inputParams.ip_port = Convert.ToInt32(connectForm.IpPort);
-                        inputParams.ip_protocol = Convert.ToInt32(connectForm.IpProtocol);
-                        inputParams.mac_address = connectForm.MacAddress;
-                        inputParams.serial_port = connectForm.SerialPort;
-                        inputParams.serial_number = connectForm.SerialNumber;
-                        inputParams.timeout = Convert.ToInt32(connectForm.Timeout);
-                        inputParams.other_info = connectForm.OtherInfo;
-                        inputParams.file = connectForm.FileInput;
+                        inputParams.ip_address = connectForm.Settings.IpAddress;
+                        inputParams.ip_port = connectForm.Settings.IpPort;
+                        inputParams.ip_protocol = connectForm.Settings.IpProtocol;
+                        inputParams.mac_address = connectForm.Settings.MacAddress;
+                        inputParams.serial_port = connectForm.Settings.SerialPort;
+                        inputParams.serial_number = connectForm.Settings.SerialNumber;
+                        inputParams.timeout = connectForm.Settings.Timeout;
+                        inputParams.other_info = connectForm.Settings.OtherInfo;
+                        inputParams.file = connectForm.Settings.File;
 
                         boardThread = new Thread(() => GetBoardData(boardId, inputParams));
                         boardThread.Start();
 
-                        Initialized = true;
+                        initialized = true;
                     }
                     catch (Exception ex)
                     {
-                        if (!InitError)
+                        if (!initError)
                         {
-                            InitError = true;
+                            initError = true;
                             MessageBox.Show(ex.Message, "LucidScribe.InitializePlugin()", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
                 else
                 {
-                    InitError = true;
+                    initError = true;
                     return false;
                 }
             }
@@ -145,23 +135,23 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
                     }
                 }
             }
-            while (!Disposing);
+            while (!disposing);
         }
 
         public static void Dispose()
         {
-            Disposing = true;
-            if (Initialized)
+            disposing = true;
+            if (initialized)
             {
                 boardShim.stop_stream();
                 boardShim.release_session();
-                Initialized = false;
+                initialized = false;
             }
         }
 
         public static double GetEEG(int index)
         {
-            if (!Initialized) return 0;
+            if (!initialized) return 0;
             if (eegTicks.Length <= index - 1) return 0;
             if (eegTicks[index - 1] == 0) return 0;
             double average = eegValues[index - 1] / eegTicks[index - 1];
@@ -170,7 +160,7 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         public static void ClearEEG(int index)
         {
-            if (!Initialized) return;
+            if (!initialized) return;
             if (clearValues.Length <= index - 1) return;
             clearValues[index - 1] = true;
         }

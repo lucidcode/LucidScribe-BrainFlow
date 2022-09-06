@@ -90,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UserSettings.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Channels\Channel16.cs" />
     <Compile Include="Channels\Channel15.cs" />

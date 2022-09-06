@@ -30,6 +30,9 @@
     {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectForm));
             this.panel3D3 = new lucidcode.Controls.Panel3D();
+            this.boardComboBox = new System.Windows.Forms.ComboBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.otherInfoText = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.timeoutText = new System.Windows.Forms.TextBox();
@@ -50,18 +53,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.boardIdText = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.thresholdText = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.cmbAlgorithm = new System.Windows.Forms.ComboBox();
             this.panel3D5 = new lucidcode.Controls.Panel3D();
             this.label4 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.cancelButton = new System.Windows.Forms.Button();
             this.connectButton = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.boardComboBox = new System.Windows.Forms.ComboBox();
             this.panel3D3.SuspendLayout();
             this.panel3D5.SuspendLayout();
             this.SuspendLayout();
@@ -94,15 +92,46 @@
             this.panel3D3.Controls.Add(this.label3);
             this.panel3D3.Controls.Add(this.boardIdText);
             this.panel3D3.Controls.Add(this.label1);
-            this.panel3D3.Controls.Add(this.thresholdText);
             this.panel3D3.Controls.Add(this.label7);
             this.panel3D3.Controls.Add(this.label2);
-            this.panel3D3.Controls.Add(this.cmbAlgorithm);
             this.panel3D3.Controls.Add(this.panel3D5);
             this.panel3D3.Location = new System.Drawing.Point(12, 12);
             this.panel3D3.Name = "panel3D3";
             this.panel3D3.Size = new System.Drawing.Size(308, 331);
             this.panel3D3.TabIndex = 284;
+            // 
+            // boardComboBox
+            // 
+            this.boardComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.boardComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.boardComboBox.FormattingEnabled = true;
+            this.boardComboBox.Location = new System.Drawing.Point(116, 30);
+            this.boardComboBox.Name = "boardComboBox";
+            this.boardComboBox.Size = new System.Drawing.Size(180, 21);
+            this.boardComboBox.TabIndex = 316;
+            this.boardComboBox.SelectedIndexChanged += new System.EventHandler(this.boardComboBox_SelectedIndexChanged);
+            // 
+            // label15
+            // 
+            this.label15.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label15.Location = new System.Drawing.Point(13, 30);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(116, 21);
+            this.label15.TabIndex = 319;
+            this.label15.Text = "Board";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label16
+            // 
+            this.label16.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.label16.Location = new System.Drawing.Point(13, 30);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(116, 21);
+            this.label16.TabIndex = 318;
+            this.label16.Text = "Algorithm";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label16.Visible = false;
             // 
             // otherInfoText
             // 
@@ -304,17 +333,6 @@
             this.label1.Text = "Board ID";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // thresholdText
-            // 
-            this.thresholdText.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.thresholdText.Location = new System.Drawing.Point(116, 87);
-            this.thresholdText.Name = "thresholdText";
-            this.thresholdText.Size = new System.Drawing.Size(180, 21);
-            this.thresholdText.TabIndex = 1;
-            this.thresholdText.Visible = false;
-            this.thresholdText.TextChanged += new System.EventHandler(this.txtThreshold_TextChanged);
-            // 
             // label7
             // 
             this.label7.ForeColor = System.Drawing.Color.MidnightBlue;
@@ -336,22 +354,6 @@
             this.label2.Text = "Algorithm";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.label2.Visible = false;
-            // 
-            // cmbAlgorithm
-            // 
-            this.cmbAlgorithm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmbAlgorithm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAlgorithm.FormattingEnabled = true;
-            this.cmbAlgorithm.Items.AddRange(new object[] {
-            "REM Detection",
-            "Motion Detection"});
-            this.cmbAlgorithm.Location = new System.Drawing.Point(116, 60);
-            this.cmbAlgorithm.Name = "cmbAlgorithm";
-            this.cmbAlgorithm.Size = new System.Drawing.Size(180, 21);
-            this.cmbAlgorithm.TabIndex = 0;
-            this.cmbAlgorithm.Visible = false;
-            this.cmbAlgorithm.SelectedIndexChanged += new System.EventHandler(this.cmbAlgorithm_SelectedIndexChanged);
             // 
             // panel3D5
             // 
@@ -428,39 +430,6 @@
             this.connectButton.UseVisualStyleBackColor = true;
             this.connectButton.Click += new System.EventHandler(this.connectButton_Click);
             // 
-            // label15
-            // 
-            this.label15.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label15.Location = new System.Drawing.Point(13, 30);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(116, 21);
-            this.label15.TabIndex = 319;
-            this.label15.Text = "Board";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label16
-            // 
-            this.label16.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label16.Location = new System.Drawing.Point(13, 30);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(116, 21);
-            this.label16.TabIndex = 318;
-            this.label16.Text = "Algorithm";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label16.Visible = false;
-            // 
-            // boardComboBox
-            // 
-            this.boardComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.boardComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.boardComboBox.FormattingEnabled = true;
-            this.boardComboBox.Location = new System.Drawing.Point(116, 30);
-            this.boardComboBox.Name = "boardComboBox";
-            this.boardComboBox.Size = new System.Drawing.Size(180, 21);
-            this.boardComboBox.TabIndex = 316;
-            this.boardComboBox.SelectedIndexChanged += new System.EventHandler(this.boardComboBox_SelectedIndexChanged);
-            // 
             // ConnectForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -490,8 +459,6 @@
     internal System.Windows.Forms.Label label4;
     internal System.Windows.Forms.Label label11;
     internal System.Windows.Forms.Label label2;
-    private System.Windows.Forms.ComboBox cmbAlgorithm;
-    private System.Windows.Forms.TextBox thresholdText;
     internal System.Windows.Forms.Label label7;
         public System.Windows.Forms.Button cancelButton;
         public System.Windows.Forms.Button connectButton;
