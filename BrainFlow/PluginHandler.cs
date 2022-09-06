@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Windows.Forms;
-using System.Drawing;
 using brainflow;
 using brainflow.math;
 
@@ -71,6 +70,8 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
                         boardThread = new Thread(() => GetBoardData(boardId, inputParams));
                         boardThread.Start();
+
+                        Initialized = true;
                     }
                     catch (Exception ex)
                     {
@@ -102,8 +103,6 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             eegValues = new double[eegChannels.Length];
             eegTicks = new double[eegChannels.Length];
             clearValues = new bool[eegChannels.Length];
-
-            Initialized = true;
 
             do
             {
