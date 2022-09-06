@@ -90,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UserSettings.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="Channels\Channel16.cs" />
     <Compile Include="Channels\Channel15.cs" />
@@ -122,7 +123,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="brainflow_boards.json">
+    <None Include="BrainFlow.Boards.lsd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

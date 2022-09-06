@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using System.Xml;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -10,23 +9,9 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 {
     public partial class ConnectForm : Form
     {
-        public string Algorithm = "REM Detection";
-        public string BoardId;
-        public string IpAddress;
-        public string IpPort;
-        public string IpProtocol;
-        public string MacAddress;
-        public string SerialPort;
-        public string SerialNumber;
-        public string OtherInfo;
-        public string Timeout;
-        public string FileInput;
-
-        public int Threshold = 600;
-
-        private List<Board> Boards;
-
-        private string lucidScribePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\lucidcode\\Lucid Scribe\\";
+        public UserSettings Settings = new UserSettings() { Board = "BrainFlow - Synthetic" };
+        private List<Board> boards = new List<Board>() { new Board { Id = -1, Type = "BrainFlow", Name = "Synthetic" } };
+        private string lucidScribePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\lucidcode\Lucid Scribe\";
 
         public ConnectForm()
         {
@@ -35,174 +20,86 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         private void ConnectForm_Load(object sender, EventArgs e)
         {
-            LoadBoards();
-            LoadSettings();
+            try
+            {
+                LoadBoards();
+                LoadSettings();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "LucidScribe.BrainFlow.Load()", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadBoards()
         {
-            if (!File.Exists("brainflow_boards.json"))
+            if (!File.Exists(lucidScribePath + @"Plugins\BrainFlow.Boards.lsd"))
             {
                 return;
             }
 
-            var json = File.ReadAllText("brainflow_boards.json");
-            Boards = JsonConvert.DeserializeObject<List<Board>>(json);
+            var json = File.ReadAllText(lucidScribePath + @"Plugins\BrainFlow.Boards.lsd");
 
-            foreach (var board in Boards)
+            try
             {
-                boardComboBox.Items.Add($"{board.Type} - {board.Name}");
+                boards = JsonConvert.DeserializeObject<List<Board>>(json);
+
+                foreach (var board in boards)
+                {
+                    boardComboBox.Items.Add($"{board.Type} - {board.Name}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "LucidScribe.BrainFlow.LoadBoards()", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void LoadSettings()
         {
-            XmlDocument xmlSettings = new XmlDocument();
-
-            if (!File.Exists(lucidScribePath + "Plugins\\BrainFlow.User.lsd"))
+            if (!File.Exists(lucidScribePath + @"Plugins\BrainFlow.User.lsd"))
             {
-                String defaultSettings = "<LucidScribeData>\r\n";
-                defaultSettings += "  <Plugin>\r\n";
-                defaultSettings += "    <Algorithm>REM Detection</Algorithm>\r\n";
-                defaultSettings += "    <Threshold>600</Threshold>\r\n";
-                defaultSettings += "    <Board>BrainFlow - Synthetic</Board>\r\n";
-                defaultSettings += "    <BoardId>-1</BoardId>\r\n";
-                defaultSettings += "    <IpAddress></IpAddress>\r\n";
-                defaultSettings += "    <IpPort></IpPort>\r\n";
-                defaultSettings += "    <IpProtocol></IpProtocol>\r\n";
-                defaultSettings += "    <MacAddress></MacAddress>\r\n";
-                defaultSettings += "    <SerialPort></SerialPort>\r\n";
-                defaultSettings += "    <SerialNumber></SerialNumber>\r\n";
-                defaultSettings += "    <OtherInfo></OtherInfo>\r\n";
-                defaultSettings += "    <Timeout></Timeout>\r\n";
-                defaultSettings += "    <File></File>\r\n";
-                defaultSettings += "  </Plugin>\r\n";
-                defaultSettings += "</LucidScribeData>";
-                File.WriteAllText(lucidScribePath + "Plugins\\BrainFlow.User.lsd", defaultSettings);
+                return;
             }
 
-            xmlSettings.Load(lucidScribePath + "Plugins\\BrainFlow.User.lsd");
+            var json = File.ReadAllText(lucidScribePath + @"Plugins\BrainFlow.User.lsd");
 
-            if (xmlSettings.DocumentElement.SelectSingleNode("//Board") != null)
+            try
             {
-                boardComboBox.Text = xmlSettings.DocumentElement.SelectSingleNode("//Board").InnerText;
+                Settings = JsonConvert.DeserializeObject<UserSettings>(json);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "LucidScribe.BrainFlow.LoadSettings()", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            cmbAlgorithm.Text = xmlSettings.DocumentElement.SelectSingleNode("//Algorithm").InnerText;
-            thresholdText.Text = xmlSettings.DocumentElement.SelectSingleNode("//Threshold").InnerText;
-            boardIdText.Text = xmlSettings.DocumentElement.SelectSingleNode("//BoardId").InnerText;
-            ipAddressText.Text = xmlSettings.DocumentElement.SelectSingleNode("//IpAddress").InnerText;
-            ipPortText.Text = xmlSettings.DocumentElement.SelectSingleNode("//IpPort").InnerText;
-            ipProtocolText.Text = xmlSettings.DocumentElement.SelectSingleNode("//IpProtocol").InnerText;
-            macAddressText.Text = xmlSettings.DocumentElement.SelectSingleNode("//MacAddress").InnerText;
-            serialPortText.Text = xmlSettings.DocumentElement.SelectSingleNode("//SerialPort").InnerText;
-            serialNumberText.Text = xmlSettings.DocumentElement.SelectSingleNode("//SerialNumber").InnerText;
-            otherInfoText.Text = xmlSettings.DocumentElement.SelectSingleNode("//OtherInfo").InnerText;
-            timeoutText.Text = xmlSettings.DocumentElement.SelectSingleNode("//Timeout").InnerText;
-            fileText.Text = xmlSettings.DocumentElement.SelectSingleNode("//File").InnerText;
+            boardComboBox.Text = Settings.Board;
 
-            BoardId = boardIdText.Text;
-            
-            Threshold = Convert.ToInt32(thresholdText.Text);
-            IpAddress = ipAddressText.Text;
-            IpPort = ipPortText.Text;
-            IpProtocol = ipProtocolText.Text;
-            MacAddress = macAddressText.Text;
-            SerialPort = serialPortText.Text;
-            SerialNumber = serialNumberText.Text;
-            OtherInfo = otherInfoText.Text;
-            Timeout = timeoutText.Text;
-            FileInput = fileText.Text;
-        }
-
-        private void cmbAlgorithm_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Algorithm = cmbAlgorithm.Text;
+            boardIdText.Text = Settings.BoardId.ToString();
+            ipAddressText.Text = Settings.IpAddress;
+            ipPortText.Text = Settings.IpPort.ToString();
+            ipProtocolText.Text = Settings.IpProtocol.ToString();
+            macAddressText.Text = Settings.MacAddress;
+            serialPortText.Text = Settings.SerialPort;
+            serialNumberText.Text = Settings.SerialNumber;
+            otherInfoText.Text = Settings.OtherInfo;
+            timeoutText.Text = Settings.Timeout.ToString();
+            fileText.Text = Settings.File;
         }
 
         private void SaveSettings()
         {
-            String settings = "<LucidScribeData>\r\n";
-            settings += "  <Plugin>\r\n";
-            settings += "    <Algorithm>" + cmbAlgorithm.Text + "</Algorithm>\r\n";
-            settings += "    <Threshold>" + thresholdText.Text + "</Threshold>\r\n";
-            settings += "    <Board>" + boardComboBox.Text + "</Board>\r\n";
-            settings += "    <BoardId>" + boardIdText.Text + "</BoardId>\r\n";
-            settings += "    <IpAddress>" + ipAddressText.Text + "</IpAddress>\r\n";
-            settings += "    <IpPort>" + ipPortText.Text + "</IpPort>\r\n";
-            settings += "    <IpProtocol>" + ipProtocolText.Text + "</IpProtocol>\r\n";
-            settings += "    <MacAddress>" + macAddressText.Text + "</MacAddress>\r\n";
-            settings += "    <SerialPort>" + serialPortText.Text + "</SerialPort>\r\n";
-            settings += "    <SerialNumber>" + serialNumberText.Text + "</SerialNumber>\r\n";
-            settings += "    <OtherInfo>" + otherInfoText.Text + "</OtherInfo>\r\n";
-            settings += "    <Timeout>" + timeoutText.Text + "</Timeout>\r\n";
-            settings += "    <File>" + fileText.Text + "</File>\r\n";
-            settings += "  </Plugin>\r\n";
-            settings += "</LucidScribeData>";
+            var settings = JsonConvert.SerializeObject(Settings, Formatting.Indented);
             File.WriteAllText(lucidScribePath + "Plugins\\BrainFlow.User.lsd", settings);
-        }
-
-        private void txtThreshold_TextChanged(object sender, EventArgs e)
-        {
-            Threshold = Convert.ToInt32(thresholdText.Text);
-        }
-
-        private void boardIdText_TextChanged(object sender, EventArgs e)
-        {
-            BoardId = boardIdText.Text;
-        }
-
-        private void ipAddressText_TextChanged(object sender, EventArgs e)
-        {
-            IpAddress = ipAddressText.Text;
-        }
-
-        private void ipPortText_TextChanged(object sender, EventArgs e)
-        {
-            IpPort = ipPortText.Text;
-        }
-
-        private void ipProtocolText_TextChanged(object sender, EventArgs e)
-        {
-            IpProtocol = ipProtocolText.Text;
-        }
-
-        private void macAddressText_TextChanged(object sender, EventArgs e)
-        {
-            MacAddress = macAddressText.Text;
-        }
-
-        private void serialPortText_TextChanged(object sender, EventArgs e)
-        {
-            SerialPort = serialPortText.Text;
-        }
-
-        private void serialNumberText_TextChanged(object sender, EventArgs e)
-        {
-            SerialNumber = serialNumberText.Text;
-        }
-
-        private void otherInfoText_TextChanged(object sender, EventArgs e)
-        {
-            OtherInfo = otherInfoText.Text;
-        }
-
-        private void timeoutText_TextChanged(object sender, EventArgs e)
-        {
-            Timeout = timeoutText.Text;
-        }
-
-        private void fileText_TextChanged(object sender, EventArgs e)
-        {
-            FileInput = fileText.Text;
         }
 
         private void boardComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var board = Boards.FirstOrDefault(b => ($"{b.Type} - {b.Name}") == boardComboBox.Text);
+            var board = boards.FirstOrDefault(b => ($"{b.Type} - {b.Name}") == boardComboBox.Text);
 
             if (board != null)
             {
+                Settings.Board = $"{board.Type} - {board.Name}";
                 boardIdText.Text = board.Id.ToString();
             }
         }
@@ -218,6 +115,62 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             SaveSettings();
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void boardIdText_TextChanged(object sender, EventArgs e)
+        {
+            Settings.BoardId = Convert.ToInt32(boardIdText.Text);
+        }
+
+        private void ipAddressText_TextChanged(object sender, EventArgs e)
+        {
+            Settings.IpAddress = ipAddressText.Text;
+        }
+
+        private void ipPortText_TextChanged(object sender, EventArgs e)
+        {
+            int value = 0;
+            int.TryParse(ipPortText.Text, out value);
+            Settings.IpPort = value;
+        }
+
+        private void ipProtocolText_TextChanged(object sender, EventArgs e)
+        {
+            int value = 0;
+            int.TryParse(ipProtocolText.Text, out value);
+            Settings.IpProtocol = value;
+        }
+
+        private void macAddressText_TextChanged(object sender, EventArgs e)
+        {
+            Settings.MacAddress = macAddressText.Text;
+        }
+
+        private void serialPortText_TextChanged(object sender, EventArgs e)
+        {
+            Settings.SerialPort = serialPortText.Text;
+        }
+
+        private void serialNumberText_TextChanged(object sender, EventArgs e)
+        {
+            Settings.SerialNumber = serialNumberText.Text;
+        }
+
+        private void otherInfoText_TextChanged(object sender, EventArgs e)
+        {
+            Settings.OtherInfo = otherInfoText.Text;
+        }
+
+        private void timeoutText_TextChanged(object sender, EventArgs e)
+        {
+            int value = 0;
+            int.TryParse(timeoutText.Text, out value);
+            Settings.Timeout = value;
+        }
+
+        private void fileText_TextChanged(object sender, EventArgs e)
+        {
+            Settings.File = fileText.Text;
         }
     }
 }
