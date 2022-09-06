@@ -26,7 +26,7 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         private List<Board> Boards;
 
-        private string lucidScribePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\lucidcode\\Lucid Scribe\\";
+        private string lucidScribePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\lucidcode\Lucid Scribe\";
 
         public ConnectForm()
         {
@@ -41,12 +41,12 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
 
         private void LoadBoards()
         {
-            if (!File.Exists("brainflow_boards.json"))
+            if (!File.Exists(lucidScribePath + @"Plugins\BrainFlow.Boards.lsd"))
             {
                 return;
             }
 
-            var json = File.ReadAllText("brainflow_boards.json");
+            var json = File.ReadAllText(lucidScribePath + @"Plugins\BrainFlow.Boards.lsd");
             Boards = JsonConvert.DeserializeObject<List<Board>>(json);
 
             foreach (var board in Boards)
@@ -59,7 +59,7 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
         {
             XmlDocument xmlSettings = new XmlDocument();
 
-            if (!File.Exists(lucidScribePath + "Plugins\\BrainFlow.User.lsd"))
+            if (!File.Exists(lucidScribePath + @"Plugins\BrainFlow.User.lsd"))
             {
                 String defaultSettings = "<LucidScribeData>\r\n";
                 defaultSettings += "  <Plugin>\r\n";
@@ -78,10 +78,10 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
                 defaultSettings += "    <File></File>\r\n";
                 defaultSettings += "  </Plugin>\r\n";
                 defaultSettings += "</LucidScribeData>";
-                File.WriteAllText(lucidScribePath + "Plugins\\BrainFlow.User.lsd", defaultSettings);
+                File.WriteAllText(lucidScribePath + @"Plugins\BrainFlow.User.lsd", defaultSettings);
             }
 
-            xmlSettings.Load(lucidScribePath + "Plugins\\BrainFlow.User.lsd");
+            xmlSettings.Load(lucidScribePath + @"Plugins\BrainFlow.User.lsd");
 
             if (xmlSettings.DocumentElement.SelectSingleNode("//Board") != null)
             {
