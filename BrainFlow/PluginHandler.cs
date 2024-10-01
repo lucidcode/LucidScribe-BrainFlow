@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using brainflow;
@@ -12,13 +13,24 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
         static bool initError;
         static bool disposing;
 
+        static Thread boardThread;
+
         static BoardShim boardShim;
         static int[] eegChannels;
-        static Thread boardThread;
+        static int samplingRate;
 
         static double[] eegValues;
         static double[] eegTicks;
         static bool[] clearValues;
+        static bool readMetrics = false;
+        static bool hasMetrics = false;
+        static double[] featureVector;
+
+        static MLModel mindfulnessMlModel;
+        static BrainFlowModelParams mindfulnessModelParams;
+
+        static MLModel restfulnessMlModel;
+        static BrainFlowModelParams restfulnessModelParams;
 
         public static EventHandler<EventArgs> Channel1Changed;
         public static EventHandler<EventArgs> Channel2Changed;
@@ -81,24 +93,35 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             return true;
         }
 
-        static void GetBoardData(int board_id, BrainFlowInputParams input_params)
+        static void GetBoardData(int boardId, BrainFlowInputParams inputParams)
         {
-            boardShim = new BoardShim(board_id, input_params);
+            boardShim = new BoardShim(boardId, inputParams);
 
             boardShim.prepare_session();
             boardShim.start_stream();
 
-            eegChannels = BoardShim.get_eeg_channels(board_id);
+            samplingRate = BoardShim.get_sampling_rate(boardId);
+            eegChannels = BoardShim.get_eeg_channels(boardId);
             eegValues = new double[eegChannels.Length];
             eegTicks = new double[eegChannels.Length];
             clearValues = new bool[eegChannels.Length];
 
+            mindfulnessModelParams = new BrainFlowModelParams((int)BrainFlowMetrics.MINDFULNESS, (int)BrainFlowClassifiers.DEFAULT_CLASSIFIER);
+            mindfulnessMlModel = new MLModel(mindfulnessModelParams);
+            mindfulnessMlModel.prepare();
+
+            restfulnessModelParams = new BrainFlowModelParams((int)BrainFlowMetrics.RESTFULNESS, (int)BrainFlowClassifiers.DEFAULT_CLASSIFIER);
+            restfulnessMlModel = new MLModel(mindfulnessModelParams);
+            restfulnessMlModel.prepare();
+
+            var bandData = new List<double[,]>();
+
             do
             {
-                double[,] unprocessed_data = boardShim.get_board_data(20);
+                double[,] boardData = boardShim.get_board_data();
                 foreach (var index in eegChannels)
                 {
-                    double[] rows = unprocessed_data.GetRow(index);
+                    double[] rows = boardData.GetRow(index);
 
                     foreach (var row in rows)
                     {
@@ -130,6 +153,31 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
                     if (index == 15 && Channel15Changed != null) Channel15Changed(string.Join(",", rows), null);
                     if (index == 16 && Channel16Changed != null) Channel16Changed(string.Join(",", rows), null);
                 }
+
+                if (readMetrics)
+                {
+                    bandData.Add(boardData);
+
+                    if (bandData.Count > 512)
+                    {
+                        bandData.RemoveAt(0);
+
+                        double[,] data = new double[0, 0];
+
+                        foreach (var d in bandData)
+                        {
+                            data = mergeArrays(data, d, eegChannels.Length * 2);
+                        }
+
+                        if (data.Length > 16384)
+                        {
+                            Tuple<double[], double[]> bands = DataFilter.get_avg_band_powers(data, eegChannels, samplingRate, true);
+                            featureVector = bands.Item1;
+                            hasMetrics = true;
+                        }
+
+                    }
+                }
             }
             while (!disposing);
         }
@@ -153,6 +201,55 @@ namespace lucidcode.LucidScribe.Plugin.BrainFlow
             double average = eegValues[index - 1] / eegTicks[index - 1];
             clearValues[index - 1] = true;
             return average;
+        }
+
+        public static double GetMetric(BrainFlowMetrics metric)
+        {
+            readMetrics = true;
+
+            if (!initialized) return 0;
+            if (!hasMetrics) return 0;
+
+            double prediction = 0;
+
+            if (metric == BrainFlowMetrics.MINDFULNESS)
+            {
+                prediction = mindfulnessMlModel.predict(featureVector)[0];
+            }
+            else if (metric == BrainFlowMetrics.RESTFULNESS)
+            {
+                prediction = restfulnessMlModel.predict(featureVector)[0];
+            }
+
+            return prediction;
+        }
+
+        static double[,] mergeArrays(double[,] data1, double[,] data2, int depth)
+        {
+            var data1Length = data1.Length / depth;
+            var data2Length = data2.Length / depth;
+
+            double[,] data = new double[depth, data1Length + data2Length]; ;
+
+            int i = 0;
+            for (; i < depth; i++)
+            {
+                for (int j = 0; j < data1Length; j++)
+                {
+                    data[i, j] = data1[i, j];
+                }
+            }
+            i = 0;
+            for (; i < depth; i++)
+            {
+                for (int j = 0; j < data2Length; j++)
+                {
+                    data[i, data1Length + j] = data2[i, j];
+                }
+
+            }
+
+            return data;
         }
     }
 }
